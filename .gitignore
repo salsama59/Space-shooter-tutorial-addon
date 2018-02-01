@@ -1,0 +1,9 @@
+﻿*.collabignore
+/ProjectSettings
+/obj
+/Library
+/Temp
+*.sln
+*.userprefs
+*.csproj
+*.vs
