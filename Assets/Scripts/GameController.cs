@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
     private bool restart;
     public int[] scores;
 
-    public enum playerPool{PLAYER1 = 0, PLAYER2 = 1};
+    public enum PlayerPool{PLAYER1 = 0, PLAYER2 = 1};
 
     public bool GameOver1
     {
@@ -118,7 +118,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void AddScore(int newScoreValue, playerPool pool)
+    public void AddScore(int newScoreValue, PlayerPool pool)
     {
         int oldScoreValue = this.scores[(int)pool];
         int finalScore = oldScoreValue + newScoreValue;
@@ -138,10 +138,10 @@ public class GameController : MonoBehaviour
             switch (i)
             {
 
-                case (int)playerPool.PLAYER1:
+                case (int)PlayerPool.PLAYER1:
                     scoreText.text = "Player 1 Score : " + scoreValue;
                     break;
-                case (int)playerPool.PLAYER2:
+                case (int)PlayerPool.PLAYER2:
                     scoreText.text = "Player 2 Score : " + scoreValue;
                     break;
 

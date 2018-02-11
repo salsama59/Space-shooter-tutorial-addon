@@ -7,18 +7,6 @@ public class ShotManager : MonoBehaviour {
     private int damage;
     private GameObject parent;
 
-    // Use this for initialization
-    void Start () {
-
-        //this.Damage = 0;
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public int Damage
     {
         get

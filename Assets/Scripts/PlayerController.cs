@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class Boundary
 {
     public float xMin, xMax, zMin, zMax;
+}
+
+public class WeaponTypeConstants
+{
+    public const string SINGLE_SHOT = "SGS";
+    public const string DOUBLE_SHOT = "DS";
+    public const string TRIPLE_SHOT = "TS";
+    public const string SCATTER_SHOT = "SS";
 }
 
 public class PlayerController : MonoBehaviour
@@ -19,7 +28,12 @@ public class PlayerController : MonoBehaviour
     public float fireRate;
     private float nextFire;
     public int shotDamage;
+    private PlayerStats stats;
 
+    private void Start()
+    {
+        Stats = new PlayerStats(WeaponTypeConstants.SINGLE_SHOT, 5f, false, 1);
+    }
 
     private void Update()
     {
@@ -134,12 +148,58 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public PlayerStats Stats
+    {
+        get
+        {
+            return Stats1;
+        }
+
+        set
+        {
+            Stats1 = value;
+        }
+    }
+
+    public PlayerStats Stats1
+    {
+        get
+        {
+            return stats;
+        }
+
+        set
+        {
+            stats = value;
+        }
+    }
+
     public void FireShot()
     {
         nextFire = Time.time + fireRate;
-        this.DoSimpleShot();
+        this.DefineShootEffect();
         AudioSource laserShotAudioSource = GetComponent<AudioSource>();
         laserShotAudioSource.Play();
+    }
+
+
+    public void DefineShootEffect()
+    {
+        switch (this.Stats1.CurrentWeapon)
+        {
+            case WeaponTypeConstants.DOUBLE_SHOT:
+                this.DoDoubleShot();
+                break;
+            case WeaponTypeConstants.TRIPLE_SHOT:
+                this.DoTipleShot();
+                break;
+            case WeaponTypeConstants.SCATTER_SHOT:
+                this.DoScatterShot();
+                break;
+            default:
+                this.DoSimpleShot();
+                break;
+        }
     }
 
     private void UpdateShotManager(GameObject newShot)

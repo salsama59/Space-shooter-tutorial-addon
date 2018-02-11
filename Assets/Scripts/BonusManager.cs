@@ -49,8 +49,27 @@ public class BonusManager : MonoBehaviour {
         bonusFlags[playerId].Add(currentBonusLevel);
     }
 
-    public void addBonusEffect()
+    public void AddBonusEffect(PowerUpStats powerUp, GameObject playerGameObject)
     {
-
+        PlayerController playerController = playerGameObject.GetComponent<PlayerController>();
+        playerController.Stats.CurrentWeapon = powerUp.WeaponModifier;
+        if(powerUp.StatName != null && !powerUp.StatName.Equals(""))
+        {
+            switch (powerUp.StatName)
+            {
+                case PlayerStats.StatNameConstants.statSpeed:
+                    playerController.Stats.Speed = powerUp.StatEnhanceValue;
+                    break;
+                case PlayerStats.StatNameConstants.statShield:
+                    playerController.Stats.Shield = powerUp.StatEnhancePossibility;
+                    break;
+                case PlayerStats.StatNameConstants.statShotPower:
+                    playerController.Stats.ShotPower = powerUp.StatEnhanceValue;
+                    break;
+                default:
+                    break;
+            }
+            
+        }
     }
 }

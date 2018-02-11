@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class RetrieveBonus : MonoBehaviour {
 
-    public Object power;
+    public PowerUpStats power;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            BonusManager bonusManager = other.GetComponent<BonusManager>();
+            GameObject bonusManagerGameObject = GameObject.FindGameObjectWithTag("BonusManager");
+            BonusManager bonusManager = bonusManagerGameObject.GetComponent<BonusManager>();
+            bonusManager.AddBonusEffect(power, other.gameObject);
             Destroy(this.gameObject);
         }
     }

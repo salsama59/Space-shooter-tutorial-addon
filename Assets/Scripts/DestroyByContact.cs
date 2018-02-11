@@ -55,12 +55,12 @@ public class DestroyByContact : MonoBehaviour
     {
         otherLifeManager = other.GetComponent<LifeManager>();
 
-        if (this.gameObject.name == "Bolt Enemy" && other.CompareTag("Bolt"))
+        if(other.CompareTag("PowerUp"))
         {
             return;
         }
 
-        if (this.gameObject.CompareTag("Bolt") && other.name == "Bolt Enemy")
+        if(this.gameObject.name == "Bolt Enemy" && other.gameObject.name == "Bolt")
         {
             return;
         }
@@ -114,13 +114,13 @@ public class DestroyByContact : MonoBehaviour
 
                 if (shotManager.Parent.name == "Player 1")
                 {
-                    this.gameController.AddScore(scoreValue, GameController.playerPool.PLAYER1);
-                    playerId = (int)GameController.playerPool.PLAYER1;
+                    this.gameController.AddScore(scoreValue, GameController.PlayerPool.PLAYER1);
+                    playerId = (int)GameController.PlayerPool.PLAYER1;
                 }
                 else if (shotManager.Parent.name == "Player 2")
                 {
-                    this.gameController.AddScore(scoreValue, GameController.playerPool.PLAYER2);
-                    playerId = (int)GameController.playerPool.PLAYER2;
+                    this.gameController.AddScore(scoreValue, GameController.PlayerPool.PLAYER2);
+                    playerId = (int)GameController.PlayerPool.PLAYER2;
                 }
 
                 int bonusLevel = bonusManager.GetBonusLevel(this.gameController.scores[playerId]);
