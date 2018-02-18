@@ -20,19 +20,16 @@ public class WeaponTypeConstants
 public class PlayerController : MonoBehaviour
 {
 
-    public float speed;
     public float tilt;
     public Boundary boundary;
     public GameObject shot;
     public Transform shotSpawn;
-    public float fireRate;
     private float nextFire;
-    public int shotDamage;
     private PlayerStats stats;
 
     private void Start()
     {
-        Stats = new PlayerStats(WeaponTypeConstants.SINGLE_SHOT, 5f, false, 1);
+        this.Stats = new PlayerStats(WeaponTypeConstants.SINGLE_SHOT, 5f, false, 1, 0.25f);
     }
 
     private void Update()
@@ -121,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
        if(rigidBodyComponent != null)
         {
-            rigidBodyComponent.velocity = newVelocity * speed;
+            rigidBodyComponent.velocity = newVelocity * this.stats.Speed;
 
             rigidBodyComponent.rotation = Quaternion.Euler(0.0f, 0.0f, rigidBodyComponent.velocity.x * -tilt);
 
@@ -132,20 +129,6 @@ public class PlayerController : MonoBehaviour
             rigidBodyComponent.position = new Vector3(rigidBodyPositionX, rigidBodyPositionY, rigidBodyPositionZ);
         }
        
-    }
-
-
-    public int ShotDamage
-    {
-        get
-        {
-            return shotDamage;
-        }
-
-        set
-        {
-            shotDamage = value;
-        }
     }
 
     public PlayerStats Stats
@@ -176,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
     public void FireShot()
     {
-        nextFire = Time.time + fireRate;
+        nextFire = Time.time + this.stats.FireRate;
         this.DefineShootEffect();
         AudioSource laserShotAudioSource = GetComponent<AudioSource>();
         laserShotAudioSource.Play();
@@ -205,7 +188,7 @@ public class PlayerController : MonoBehaviour
     private void UpdateShotManager(GameObject newShot)
     {
         ShotManager shotManager = newShot.GetComponent<ShotManager>();
-        shotManager.Damage = ShotDamage;
+        shotManager.Damage = this.stats.ShotPower;
         shotManager.Parent = this.gameObject;
     }
 

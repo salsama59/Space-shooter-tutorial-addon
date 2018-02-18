@@ -12,8 +12,8 @@ public class BonusManager : MonoBehaviour {
 
     private void Start()
     {
-        bonusFlags.Add(0, new List<int>());
-        bonusFlags.Add(1, new List<int>());
+        this.bonusFlags.Add((int)GameController.PlayerPool.PLAYER1, new List<int>());
+        this.bonusFlags.Add((int)GameController.PlayerPool.PLAYER2, new List<int>());
     }
 
     public int GetThreshold(int bonusLevel)
@@ -52,19 +52,31 @@ public class BonusManager : MonoBehaviour {
     public void AddBonusEffect(PowerUpStats powerUp, GameObject playerGameObject)
     {
         PlayerController playerController = playerGameObject.GetComponent<PlayerController>();
-        playerController.Stats.CurrentWeapon = powerUp.WeaponModifier;
+
+        if(powerUp.WeaponModifier == null || powerUp.WeaponModifier.Equals(""))
+        {
+            playerController.Stats.CurrentWeapon = WeaponTypeConstants.SINGLE_SHOT;
+        }
+        else
+        {
+            playerController.Stats.CurrentWeapon = powerUp.WeaponModifier;
+        }
+        
         if(powerUp.StatName != null && !powerUp.StatName.Equals(""))
         {
             switch (powerUp.StatName)
             {
                 case PlayerStats.StatNameConstants.statSpeed:
-                    playerController.Stats.Speed = powerUp.StatEnhanceValue;
+                    playerController.Stats.Speed += powerUp.StatEnhanceValue;
                     break;
                 case PlayerStats.StatNameConstants.statShield:
                     playerController.Stats.Shield = powerUp.StatEnhancePossibility;
                     break;
                 case PlayerStats.StatNameConstants.statShotPower:
-                    playerController.Stats.ShotPower = powerUp.StatEnhanceValue;
+                    playerController.Stats.ShotPower += powerUp.StatEnhanceValue;
+                    break;
+                case PlayerStats.StatNameConstants.statFireRate:
+                    playerController.Stats.FireRate += powerUp.StatEnhanceValue;
                     break;
                 default:
                     break;

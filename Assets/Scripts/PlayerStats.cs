@@ -10,13 +10,15 @@ public class PlayerStats {
     private float speed;
     private bool shield;
     private int shotPower;
+    private float fireRate;
 
-    public PlayerStats(String currentWeapon, float speed, bool shield, int shotPower)
+    public PlayerStats(String currentWeapon, float speed, bool shield, int shotPower, float fireRate)
     {
         this.CurrentWeapon = currentWeapon;
         this.Speed = speed;
         this.Shield = shield;
         this.ShotPower = shotPower;
+        this.FireRate = fireRate;
     }
 
     public class StatNameConstants
@@ -24,6 +26,7 @@ public class PlayerStats {
         public const string statSpeed = "speed";
         public const string statShield = "shield";
         public const string statShotPower = "shotPower";
+        public const string statFireRate = "fireRate";
     }
 
     public string CurrentWeapon
@@ -75,6 +78,19 @@ public class PlayerStats {
         set
         {
             shotPower = value;
+        }
+    }
+
+    public float FireRate
+    {
+        get
+        {
+            return fireRate;
+        }
+
+        set
+        {
+            fireRate = value;
         }
     }
 }
